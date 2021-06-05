@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LazadaAssessment</string>
+    <string name="btn_show_followers">Show Followers</string>
+    <string name="search">Search</string>
+</resources>
