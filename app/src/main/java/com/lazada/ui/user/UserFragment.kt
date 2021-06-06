@@ -116,9 +116,9 @@ class UserFragment : Fragment() {
 
     private fun renderLoadingState(loading: Boolean) {
         if (loading) {
-            mViewBinding.loadding.visibility = VISIBLE
+            mViewBinding.loading.visibility = VISIBLE
         } else {
-            mViewBinding.loadding.visibility = GONE
+            mViewBinding.loading.visibility = GONE
         }
     }
 

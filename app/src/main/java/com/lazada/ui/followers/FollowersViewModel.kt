@@ -21,8 +21,17 @@ class FollowersViewModel @Inject constructor(val followersUserCase: GetUserFollo
 
     private val _followerList = MutableLiveData<MutableList<FollowersView>>()
     val followerList: LiveData<MutableList<FollowersView>> = _followerList
+    private val _loading = MutableLiveData<Boolean>()
+    val loading = _loading
+    private val _networkError = MutableLiveData<Boolean>()
+    val networkError = _networkError
+    private val _generalError = MutableLiveData<Boolean>()
+    val generalError = _generalError
+    private val _featureError = MutableLiveData<Boolean>()
+    val featureError = _featureError
 
     fun getFollowers(userName: String) {
+        _loading.postValue(true)
         viewModelScope.launch {
             when (val result = followersUserCase(userName)) {
                 is DataHolder.Success<*> -> onGetUserSuccess(result.response as List<FollowersDomain>)
@@ -32,6 +41,7 @@ class FollowersViewModel @Inject constructor(val followersUserCase: GetUserFollo
     }
 
     private fun onGetUserSuccess(followersDomain: List<FollowersDomain>) {
+        _loading.postValue(false)
         val followersViewList = mutableListOf<FollowersView>()
         followersDomain.forEach {
             followersViewList.add(it.toFollowersView())
@@ -40,10 +50,11 @@ class FollowersViewModel @Inject constructor(val followersUserCase: GetUserFollo
     }
 
     private fun onGetUserFail(failure: Failure) {
+        _loading.postValue(true)
         when (failure) {
-            is Failure.FeatureFailure -> TODO()
-            Failure.GeneralFailure -> TODO()
-            Failure.NetworkConnection -> TODO()
+            is Failure.FeatureFailure -> _featureError.postValue(true)
+            Failure.GeneralFailure -> _generalError.postValue(true)
+            Failure.NetworkConnection -> _networkError.postValue(true)
         }
     }
 
