@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lazada.core.DataHolder
+import com.lazada.core.Failure
 import com.lazada.domain.GetUserUseCase
 import com.lazada.model.user.UserDomain
 import com.lazada.model.user.UserView
@@ -20,13 +21,19 @@ class UserViewModel @Inject constructor(private val getUserUseCase: GetUserUseCa
     val userProfile: LiveData<UserView> = _userProfile
     private val _loading = MutableLiveData<Boolean>()
     val loading = _loading
+    private val _networkError = MutableLiveData<Boolean>()
+    val networkError = _networkError
+    private val _featureError = MutableLiveData<Boolean>()
+    val featureError = _featureError
+    private val _generalError = MutableLiveData<Boolean>()
+    val generalError = _generalError
 
     fun getUserInfo(userName: String) {
         _loading.postValue(true)
         viewModelScope.launch {
             when (val result = getUserUseCase(userName)) {
                 is DataHolder.Success<*> -> onGetUserSuccess(result.response as UserDomain)
-                is DataHolder.Error -> onGetUserFail(result.message)
+                is DataHolder.Error -> onGetUserFail(result.failure)
             }
         }
     }
@@ -37,9 +44,13 @@ class UserViewModel @Inject constructor(private val getUserUseCase: GetUserUseCa
         _userProfile.postValue(userView)
     }
 
-    private fun onGetUserFail(error: String) {
+    private fun onGetUserFail(failure: Failure) {
         _loading.postValue(false)
-        Log.e("error", error)
+        when (failure) {
+            is Failure.FeatureFailure -> featureError.postValue(true)
+            is Failure.GeneralFailure -> generalError.postValue(true)
+            is Failure.NetworkConnection -> networkError.postValue(true)
+        }
     }
 
 }

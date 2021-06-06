@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lazada.core.DataHolder
+import com.lazada.core.Failure
 import com.lazada.domain.GetUserFollowersUserCase
 import com.lazada.model.follower.FollowersDomain
 import com.lazada.model.follower.FollowersView
@@ -25,7 +26,7 @@ class FollowersViewModel @Inject constructor(val followersUserCase: GetUserFollo
         viewModelScope.launch {
             when (val result = followersUserCase(userName)) {
                 is DataHolder.Success<*> -> onGetUserSuccess(result.response as List<FollowersDomain>)
-                is DataHolder.Error -> onGetUserFail(result.message)
+                is DataHolder.Error -> onGetUserFail(result.failure)
             }
         }
     }
@@ -38,8 +39,12 @@ class FollowersViewModel @Inject constructor(val followersUserCase: GetUserFollo
         _followerList.postValue(followersViewList)
     }
 
-    private fun onGetUserFail(error: String) {
-        Log.e("error", error)
+    private fun onGetUserFail(failure: Failure) {
+        when (failure) {
+            is Failure.FeatureFailure -> TODO()
+            Failure.GeneralFailure -> TODO()
+            Failure.NetworkConnection -> TODO()
+        }
     }
 
 }
