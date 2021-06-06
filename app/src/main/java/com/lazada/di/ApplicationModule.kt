@@ -3,14 +3,12 @@ package com.lazada.di
 import com.lazada.BuildConfig
 import com.lazada.network.GithubApi
 import com.lazada.network.GithubService
-import com.lazada.network.GithubServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -56,7 +54,7 @@ object ApplicationModule {
     @Provides
     @Singleton
      fun provideApiService(githubApi: GithubApi) : GithubService {
-        return GithubServiceImpl(githubApi)
+        return GithubService(githubApi)
     }
 
 }
