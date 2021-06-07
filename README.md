@@ -10,4 +10,5 @@
 	- AAC viewmodel
 	- Navigation
 	- Viewbinding
+	- Coil
 
