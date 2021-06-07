@@ -1,13 +1,8 @@
 package com.lazada.domain
 
-import com.lazada.core.DataHolder
-import com.lazada.repository.UserRepository
-import javax.inject.Inject
+import com.lazada.core.Result
+import com.lazada.model.user.UserDomain
 
-class GetUserUseCase @Inject constructor(private val userRepository: UserRepository) {
-
-    suspend operator fun invoke(userName: String): DataHolder? {
-        return userRepository.getUserInfo(userName)
-    }
-
+interface GetUserUseCase {
+    suspend fun getUser(userName: String): Result<UserDomain>
 }

@@ -10,6 +10,20 @@ data class UserDomain(
     var twitterUsername: String,
     var followers: Int
 ) {
+
+    companion object {
+        fun empty() = UserDomain(
+            login = "",
+            avatarUrl = "",
+            name = "",
+            company = "",
+            blog = "",
+            location = "",
+            twitterUsername = "",
+            followers = 0
+        )
+    }
+
     fun toUserView() = UserView(
         login = login,
         avatarUrl = avatarUrl,

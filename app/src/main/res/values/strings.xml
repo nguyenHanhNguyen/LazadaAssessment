@@ -2,4 +2,7 @@
     <string name="app_name">LazadaAssessment</string>
     <string name="btn_show_followers">Show Followers</string>
     <string name="search">Search</string>
+    <string name="network_error">Please connect to network and try again</string>
+    <string name="user_not_found_error">User not found</string>
+    <string name="general_error">Something went wrong</string>
 </resources>

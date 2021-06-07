@@ -1,12 +1,11 @@
 package com.lazada.ui.user
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lazada.core.DataHolder
 import com.lazada.core.Failure
+import com.lazada.core.Result
 import com.lazada.domain.GetUserUseCase
 import com.lazada.model.user.UserDomain
 import com.lazada.model.user.UserView
@@ -31,9 +30,9 @@ class UserViewModel @Inject constructor(private val getUserUseCase: GetUserUseCa
     fun getUserInfo(userName: String) {
         _loading.postValue(true)
         viewModelScope.launch {
-            when (val result = getUserUseCase(userName)) {
-                is DataHolder.Success<*> -> onGetUserSuccess(result.response as UserDomain)
-                is DataHolder.Error -> onGetUserFail(result.failure)
+            when (val result = getUserUseCase.getUser(userName)) {
+                is Result.Success<UserDomain> -> onGetUserSuccess(result.response)
+                is Result.Error -> onGetUserFail(result.failure)
             }
         }
     }
@@ -42,6 +41,9 @@ class UserViewModel @Inject constructor(private val getUserUseCase: GetUserUseCa
         _loading.postValue(false)
         val userView = userDomain.toUserView()
         _userProfile.postValue(userView)
+        _networkError.postValue(false)
+        _generalError.postValue(false)
+        _featureError.postValue(false)
     }
 
     private fun onGetUserFail(failure: Failure) {

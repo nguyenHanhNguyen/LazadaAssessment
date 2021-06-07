@@ -67,4 +67,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
+    //test
+    testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion"
+    testImplementation "androidx.arch.core:core-testing:$archCoreTestVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+
 }

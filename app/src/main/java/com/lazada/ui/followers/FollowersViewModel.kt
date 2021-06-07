@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lazada.core.DataHolder
+import com.lazada.core.Result
 import com.lazada.core.Failure
-import com.lazada.domain.GetUserFollowersUseCase
+import com.lazada.domain.GetFollowersUseCase
+import com.lazada.domain.GetFollowersUseCaseImpl
 import com.lazada.model.follower.FollowersDomain
 import com.lazada.model.follower.FollowersView
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FollowersViewModel @Inject constructor(val followersUserCase: GetUserFollowersUseCase) :
+class FollowersViewModel @Inject constructor(private val getFollowersUseCase: GetFollowersUseCase) :
     ViewModel() {
 
     private val _followerList = MutableLiveData<MutableList<FollowersView>>()
@@ -31,9 +32,9 @@ class FollowersViewModel @Inject constructor(val followersUserCase: GetUserFollo
     fun getFollowers(userName: String) {
         _loading.postValue(true)
         viewModelScope.launch {
-            when (val result = followersUserCase(userName)) {
-                is DataHolder.Success<*> -> onGetUserSuccess(result.response as List<FollowersDomain>)
-                is DataHolder.Error -> onGetUserFail(result.failure)
+            when (val result = getFollowersUseCase.getFollowers(userName)) {
+                is Result.Success<List<FollowersDomain>> -> onGetUserSuccess(result.response)
+                is Result.Error -> onGetUserFail(result.failure)
             }
         }
     }

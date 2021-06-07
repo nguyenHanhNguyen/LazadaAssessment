@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import coil.load
+import com.lazada.R
 import com.lazada.databinding.FragmentUserBinding
 import com.lazada.model.user.UserView
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,11 +21,6 @@ class UserFragment : Fragment() {
 
     private val viewModel: UserViewModel by viewModels()
     private lateinit var mViewBinding: FragmentUserBinding
-    private var mUserName = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +41,6 @@ class UserFragment : Fragment() {
         mViewBinding.btnSearch.setOnClickListener {
             val searchQuery = mViewBinding.edSearch.text.toString()
             if (searchQuery.isNotEmpty()) {
-                mUserName = searchQuery
                 viewModel.getUserInfo(searchQuery)
             }
         }
@@ -80,17 +75,16 @@ class UserFragment : Fragment() {
     }
 
     private fun renderNetworkError(error: Boolean) {
-        renderError(error, "Please connect to network and try again", mViewBinding.tvError)
+        renderError(error, getString(R.string.network_error), mViewBinding.tvError)
 
     }
 
     private fun renderFeatureError(error: Boolean) {
-        renderError(error, "User not found", mViewBinding.tvError)
-
+        renderError(error, getString(R.string.user_not_found_error), mViewBinding.tvError)
     }
 
     private fun renderGeneralError(error: Boolean) {
-        renderError(error, "Something went wrong", mViewBinding.tvError)
+        renderError(error, getString(R.string.general_error), mViewBinding.tvError)
     }
 
     private fun renderError(error: Boolean, msg: String, errorTv: TextView) {
@@ -107,6 +101,7 @@ class UserFragment : Fragment() {
         mViewBinding.content.visibility = VISIBLE
         mViewBinding.tvError.visibility = GONE
         mViewBinding.tvName.text = userView.name
+        mViewBinding.tvLogin.text = userView.login
         mViewBinding.tvTwitter.text = userView.twitterUsername
         mViewBinding.tvCompany.text = userView.company
         mViewBinding.tvLocation.text = userView.location
@@ -117,14 +112,17 @@ class UserFragment : Fragment() {
     private fun renderLoadingState(loading: Boolean) {
         if (loading) {
             mViewBinding.loading.visibility = VISIBLE
+            mViewBinding.content.visibility = GONE
         } else {
             mViewBinding.loading.visibility = GONE
+            mViewBinding.content.visibility = VISIBLE
         }
     }
 
     private fun setUpNavigation() {
         mViewBinding.btnShowFollowers.setOnClickListener { view ->
-            val action = UserFragmentDirections.actionUserFragmentToFollowersFragment(mUserName)
+            val action =
+                UserFragmentDirections.actionUserFragmentToFollowersFragment(mViewBinding.edSearch.text.toString())
             view.findNavController().navigate(action)
         }
     }

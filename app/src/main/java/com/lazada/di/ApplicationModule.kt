@@ -53,7 +53,7 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-     fun provideApiService(githubApi: GithubApi) : GithubService {
+    fun provideApiService(githubApi: GithubApi): GithubService {
         return GithubService(githubApi)
     }
 

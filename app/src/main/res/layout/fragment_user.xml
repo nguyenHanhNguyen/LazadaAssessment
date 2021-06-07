@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/size_16">
+    android:layout_height="match_parent">
 
     <ProgressBar
         android:id="@+id/loading"
@@ -30,6 +29,7 @@
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/margin_normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -73,60 +73,74 @@
 
         <ImageView
             android:id="@+id/imv_avatar"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_followers"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="@dimen/margin_normal"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/guideline"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:textSize="@dimen/text_size_24"
+            app:layout_constraintLeft_toRightOf="@+id/imv_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="User Name" />
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_normal"
+            app:layout_constraintLeft_toRightOf="@+id/imv_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            tools:text="User Name" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:drawableStart="@drawable/ic_location_24"
+            android:layout_marginTop="@dimen/margin_normal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_avatar"
+            tools:text="Location" />
+
+        <TextView
+            android:id="@+id/tv_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:drawableStart="@drawable/ic_company_24"
+            app:layout_constraintLeft_toRightOf="@+id/tv_location"
+            app:layout_constraintTop_toBottomOf="@id/imv_avatar"
+            tools:text="Company" />
 
         <TextView
             android:id="@+id/tv_twitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_normal"
-            app:layout_constraintLeft_toRightOf="@+id/tv_name"
-            app:layout_constraintTop_toTopOf="parent"
+            android:drawableStart="@drawable/ic_baseline_toys_24"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_location"
             tools:text="Twitter" />
-
-        <TextView
-            android:id="@+id/tv_company"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/tv_twitter"
-            tools:text="Company" />
-
-        <TextView
-            android:id="@+id/tv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/tv_company"
-            tools:text="Location" />
 
         <TextView
             android:id="@+id/tv_followers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/tv_location"
+            android:drawableStart="@drawable/ic_follower_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintTop_toBottomOf="@id/tv_twitter"
             tools:text="1000" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="User Name" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="90dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

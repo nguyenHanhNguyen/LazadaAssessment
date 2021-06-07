@@ -3,14 +3,15 @@ package com.lazada.ui.followers
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lazada.R
 import com.lazada.databinding.FragmentFollowersBinding
 import com.lazada.model.follower.FollowersView
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,26 +71,26 @@ class FollowersFragment : Fragment() {
     }
 
     private fun renderNetworkError(error: Boolean) {
-        renderError(error, "Please connect to network and try again", mViewBinding.tvError)
+        renderError(error, getString(R.string.network_error), mViewBinding.tvError)
 
     }
 
     private fun renderFeatureError(error: Boolean) {
-        renderError(error, "User not found", mViewBinding.tvError)
+        renderError(error, getString(R.string.user_not_found_error), mViewBinding.tvError)
 
     }
 
     private fun renderGeneralError(error: Boolean) {
-        renderError(error, "Something went wrong", mViewBinding.tvError)
+        renderError(error, getString(R.string.general_error), mViewBinding.tvError)
     }
 
     private fun renderError(error: Boolean, msg: String, errorTv: TextView) {
         if (error) {
-            mViewBinding.rvFollowers.visibility = View.GONE
+            mViewBinding.rvFollowers.visibility = GONE
             errorTv.visibility = VISIBLE
             errorTv.text = msg
         } else {
-            errorTv.visibility = View.GONE
+            errorTv.visibility = GONE
         }
     }
 
@@ -97,7 +98,7 @@ class FollowersFragment : Fragment() {
         if (loading) {
             mViewBinding.loading.visibility = VISIBLE
         } else {
-            mViewBinding.loading.visibility = View.GONE
+            mViewBinding.loading.visibility = GONE
         }
     }
 
